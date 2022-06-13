@@ -1,0 +1,93 @@
+{% extends 'base.html' %} {% block title %}Home | Students Result{% endblock title %} {% block body %}
+
+
+
+
+
+<table class="table table-hover container my-5">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th colspan="1" scope="col">NAME</th>
+            <th colspan="1" scope="col">AGE</th>
+            <th colspan="1" scope="col">MARKS</th>
+            <th colspan="2"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+
+        {% for dict in list %}
+
+
+
+
+        <tr>
+            <th scope="row">{{dict.id}}</th>
+            <td colspan="1">{{dict.name}}</td>
+            <td colspan="1">{{dict.age}}</td>
+            <td colspan="1">{{dict.marks}}</td>
+            <td><a type="button" class="btn btn-outline-secondary mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{dict.id}}">Edit</a>
+                <form action="deletestudent" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{dict.id}}" name="id">
+                    <button type="submit" style="display:inline;" class="btn btn-outline-danger mx-2">Delete</button>
+                </form>
+            </td>
+
+
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop{{dict.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog text-light">
+                    <div class="modal-content text-light">
+                        <div class="modal-header bg-dark text-light">
+                            <h5 class="modal-title" id="staticBackdropLabel">Edit Data</h5>
+                            <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bg-dark text-light">
+
+
+
+                            <form action="editstudent" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{dict.id}}" name="id">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-dark text-light" id="inputGroup-sizing-sm">Name</span>
+                                    <input type="text" id="name" name="name" class="form-control bg-dark boder border-light text-light" value="{{dict.name}}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-dark text-light" id="inputGroup-sizing-sm">Age</span>
+                                    <input type="number" id="age" name="age" class="form-control bg-dark boder border-light text-light" value="{{dict.age}}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-dark text-light" id="inputGroup-sizing-sm">Marks</span>
+                                    <input type="number" id="marks" name="marks" class="form-control bg-dark boder border-light text-light" value="{{dict.marks}}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+
+
+
+                                <div class="modal-footer bg-dark text-light">
+                                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-outline-primary">Edit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            {% endfor %}
+    </tbody>
+</table>
+
+{% endblock body %}
